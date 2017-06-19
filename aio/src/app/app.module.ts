@@ -5,8 +5,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
-import { MdToolbarModule, MdButtonModule, MdIconModule, MdInputModule, MdSidenavModule, MdTabsModule, Platform,
-         MdIconRegistry } from '@angular/material';
+import {
+  MdButtonModule,
+  MdIconModule,
+  MdIconRegistry,
+  MdInputModule,
+  MdProgressBarModule,
+  MdSidenavModule,
+  MdTabsModule,
+  MdToolbarModule,
+  Platform
+} from '@angular/material';
 
 // Temporary fix for MdSidenavModule issue:
 // crashes with "missing first" operator when SideNav.mode is "over"
@@ -16,7 +25,6 @@ import { SwUpdatesModule } from 'app/sw-updates/sw-updates.module';
 
 import { AppComponent } from 'app/app.component';
 import { ApiService } from 'app/embedded/api/api.service';
-import { AutoScrollService } from 'app/shared/auto-scroll.service';
 import { CustomMdIconRegistry, SVG_ICONS } from 'app/shared/custom-md-icon-registry';
 import { DocViewerComponent } from 'app/layout/doc-viewer/doc-viewer.component';
 import { DtComponent } from 'app/layout/doc-viewer/dt.component';
@@ -31,9 +39,13 @@ import { TopMenuComponent } from 'app/layout/top-menu/top-menu.component';
 import { FooterComponent } from 'app/layout/footer/footer.component';
 import { NavMenuComponent } from 'app/layout/nav-menu/nav-menu.component';
 import { NavItemComponent } from 'app/layout/nav-item/nav-item.component';
+import { ScrollService } from 'app/shared/scroll.service';
+import { ScrollSpyService } from 'app/shared/scroll-spy.service';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { TocService } from 'app/shared/toc.service';
+
+import { SharedModule } from 'app/shared/shared.module';
 
 // These are the hardcoded inline svg sources to be used by the `<md-icon>` component
 export const svgIconProviders = [
@@ -66,10 +78,12 @@ export const svgIconProviders = [
     MdButtonModule,
     MdIconModule,
     MdInputModule,
-    MdToolbarModule,
+    MdProgressBarModule,
     MdSidenavModule,
     MdTabsModule,
-    SwUpdatesModule
+    MdToolbarModule,
+    SwUpdatesModule,
+    SharedModule
   ],
   declarations: [
     AppComponent,
@@ -84,7 +98,6 @@ export const svgIconProviders = [
   ],
   providers: [
     ApiService,
-    AutoScrollService,
     DocumentService,
     GaService,
     Logger,
@@ -93,8 +106,10 @@ export const svgIconProviders = [
     LocationService,
     { provide: MdIconRegistry, useClass: CustomMdIconRegistry },
     NavigationService,
-    SearchService,
     Platform,
+    ScrollService,
+    ScrollSpyService,
+    SearchService,
     svgIconProviders,
     TocService
   ],

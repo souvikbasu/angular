@@ -3,7 +3,7 @@
 # compiled output
 /dist
 /out-tsc
-/src/content
+/src/generated
 /tmp
 
 # dependencies
@@ -43,3 +43,6 @@ protractor-results*.txt
 # System Files
 .DS_Store
 Thumbs.db
+
+# copied dependencies
+src/assets/js/lunr*

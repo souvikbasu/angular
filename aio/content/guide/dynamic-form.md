@@ -1,11 +1,6 @@
-@title
-Dynamic Forms
+# Dynamic Forms
 
-@intro
-Render dynamic forms with FormGroup.
-
-@description
-
+{@a top}
 
 Building handcrafted forms can be costly and time-consuming,
 especially if you need a great number of them, they're similar to each other, and they change frequently
@@ -25,14 +20,6 @@ online application experience for heroes seeking employment.
 The agency is constantly tinkering with the application process.
 You can create the forms on the fly *without changing the application code*.
 {@a toc}
-
-# Contents
- * [Bootstrap](guide/dynamic-form#bootstrap)
- * [Question model](guide/dynamic-form#object-model)
- * [Question form components](guide/dynamic-form#form-component)
- * [Questionnaire data](guide/dynamic-form#questionnaire-data)
- * [Dynamic template](guide/dynamic-form#dynamic-template)
-
 
 See the <live-example name="dynamic-form"></live-example>.
 
@@ -216,8 +203,8 @@ Saving and retrieving the data is an exercise for another time.
 
 The final form looks like this:
 
-<figure class='image-display'>
-  <img src="content/images/guide/dynamic-form/dynamic-form.png" alt="Dynamic-Form"></img>
+<figure>
+  <img src="generated/images/guide/dynamic-form/dynamic-form.png" alt="Dynamic-Form">
 </figure>
 
 

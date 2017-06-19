@@ -6,12 +6,13 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injector, RenderComponentType, RootRenderer, Sanitizer, SecurityContext, ViewEncapsulation, WrappedValue, getDebugNode} from '@angular/core';
+import {ErrorHandler, Injector, RenderComponentType, RootRenderer, Sanitizer, SecurityContext, ViewEncapsulation, WrappedValue, getDebugNode} from '@angular/core';
 import {getDebugContext} from '@angular/core/src/errors';
 import {ArgumentType, BindingFlags, DebugContext, NodeDef, NodeFlags, OutputType, RootData, Services, ViewData, ViewDefinition, ViewFlags, ViewHandleEventFn, ViewUpdateFn, anchorDef, asElementData, elementDef, rootRenderNodes, textDef, viewDef} from '@angular/core/src/view/index';
+import {TestBed} from '@angular/core/testing';
 import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 
-import {ARG_TYPE_VALUES, checkNodeInlineOrDynamic, createRootView, isBrowser, removeNodes} from './helper';
+import {ARG_TYPE_VALUES, checkNodeInlineOrDynamic, createRootView, isBrowser, recordNodeToRemove} from './helper';
 
 export function main() {
   describe(`View Elements`, () => {
@@ -181,7 +182,7 @@ export function main() {
           // won't work in IE.
           result.rootNodes.forEach((node) => {
             document.body.appendChild(node);
-            removeNodes.push(node);
+            recordNodeToRemove(node);
           });
           return result;
         }
@@ -282,17 +283,14 @@ export function main() {
         });
 
         it('should report debug info on event errors', () => {
+          const handleErrorSpy = spyOn(TestBed.get(ErrorHandler), 'handleError');
           const addListenerSpy = spyOn(HTMLElement.prototype, 'addEventListener').and.callThrough();
           const {view, rootNodes} = createAndAttachAndGetRootNodes(compViewDef([elementDef(
               NodeFlags.None, null !, null !, 0, 'button', null !, null !, [[null !, 'click']],
               () => { throw new Error('Test'); })]));
 
-          let err: any;
-          try {
-            addListenerSpy.calls.mostRecent().args[1]('SomeEvent');
-          } catch (e) {
-            err = e;
-          }
+          addListenerSpy.calls.mostRecent().args[1]('SomeEvent');
+          const err = handleErrorSpy.calls.mostRecent().args[0];
           expect(err).toBeTruthy();
           expect(err.message).toBe('Test');
           const debugCtx = getDebugContext(err);

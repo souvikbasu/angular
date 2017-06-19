@@ -16,7 +16,7 @@ const targetPackage = require('../target-package');
 const remarkPackage = require('../remark-package');
 const postProcessPackage = require('../post-process-package');
 
-const { PROJECT_ROOT, DOCS_OUTPUT_PATH, TEMPLATES_PATH, requireFolder } = require('../config');
+const { PROJECT_ROOT, CONTENTS_PATH, OUTPUT_PATH, DOCS_OUTPUT_PATH, TEMPLATES_PATH, AIO_PATH, requireFolder } = require('../config');
 
 module.exports = new Package('angular-base', [
   jsdocPackage, nunjucksPackage, linksPackage, examplesPackage, targetPackage, remarkPackage, postProcessPackage
@@ -28,10 +28,16 @@ module.exports = new Package('angular-base', [
   .processor(require('./processors/checkUnbalancedBackTicks'))
   .processor(require('./processors/convertToJson'))
   .processor(require('./processors/fixInternalDocumentLinks'))
+  .processor(require('./processors/copyContentAssets'))
 
   // overrides base packageInfo and returns the one for the 'angular/angular' repo.
   .factory('packageInfo', function() { return require(path.resolve(PROJECT_ROOT, 'package.json')); })
   .factory(require('./readers/json'))
+  .factory(require('./services/copyFolder'))
+  .factory(require('./services/getImageDimensions'))
+
+  .factory(require('./post-processors/add-image-dimensions'))
+  .factory(require('./post-processors/auto-link-code'))
 
   .config(function(checkAnchorLinksProcessor) {
     // This is disabled here to prevent false negatives for the `docs-watch` task.
@@ -49,6 +55,7 @@ module.exports = new Package('angular-base', [
 
     generateKeywordsProcessor.ignoreWordsFile = path.resolve(__dirname, 'ignore.words');
     generateKeywordsProcessor.docTypesToIgnore = ['example-region'];
+    generateKeywordsProcessor.propertiesToIgnore = ['renderedContent'];
   })
 
   // Where do we write the output files?
@@ -93,7 +100,11 @@ module.exports = new Package('angular-base', [
     };
   })
 
-
+  .config(function(copyContentAssetsProcessor) {
+    copyContentAssetsProcessor.assetMappings.push(
+      { from: path.resolve(CONTENTS_PATH, 'images'), to: path.resolve(OUTPUT_PATH, 'images') }
+    );
+  })
 
   // We are not going to be relaxed about ambiguous links
   .config(function(getLinkInfo) {
@@ -114,9 +125,13 @@ module.exports = new Package('angular-base', [
   })
 
 
-  .config(function(postProcessHtml) {
+  .config(function(postProcessHtml, addImageDimensions, autoLinkCode) {
+    addImageDimensions.basePath = path.resolve(AIO_PATH, 'src');
     postProcessHtml.plugins = [
-      require('./post-processors/autolink-headings')
+      require('./post-processors/autolink-headings'),
+      addImageDimensions,
+      require('./post-processors/h1-checker'),
+      autoLinkCode,
     ];
   })
 

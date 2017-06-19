@@ -37,7 +37,7 @@ fi
 setEnvVar NODE_VERSION 6.9.5
 setEnvVar NPM_VERSION 3.10.7 # do not upgrade to >3.10.8 unless https://github.com/npm/npm/issues/14042 is resolved
 setEnvVar YARN_VERSION 0.21.3
-setEnvVar CHROMIUM_VERSION 433059 # Chrome 53 linux stable, see https://www.chromium.org/developers/calendar
+setEnvVar CHROMIUM_VERSION 464641 # Chrome 59 linux stable, see https://www.chromium.org/developers/calendar
 setEnvVar SAUCE_CONNECT_VERSION 4.3.11
 setEnvVar PROJECT_ROOT $(cd ${thisDir}/../..; pwd)
 
@@ -59,10 +59,11 @@ if [[ ${TRAVIS:-} ]]; then
       setEnvVar KARMA_JS_BROWSERS `node -e "console.log(require('/home/travis/build/angular/angular/browser-providers.conf').browserstackAliases.CI_OPTIONAL.join(','))"`
       ;;
     aio)
-      # Due to network latency/server performance, the min accepted PWA score
-      # on previews is a little lower than on staging.
-      setEnvVar MIN_PWA_SCORE_PREVIEW 93
-      setEnvVar MIN_PWA_SCORE_STAGING 95
+      # Determine the current stable branch.
+      readonly versionRe="^\s*([0-9]+\.[0-9]+)\.[0-9]+.*$"
+      setEnvVar STABLE_BRANCH `npm info @angular/core dist-tags.latest | sed -r "s/$versionRe/\1.x/"`
+
+      setEnvVar MIN_PWA_SCORE 95
       ;;
   esac
 else
@@ -122,6 +123,9 @@ setEnvVar PATH $HOME/.yarn/bin:$PATH
 # absolute module ids (e.g. @angular/core)
 setEnvVar NODE_PATH ${NODE_PATH:-}:${PROJECT_ROOT}/dist/all:${PROJECT_ROOT}/dist/tools
 setEnvVar LOGS_DIR /tmp/angular-build/logs
+
+# Log file for full PWA testing results
+setEnvVar PWA_RESULTS_LOG $LOGS_DIR/pwa-results.json
 
 # strip leading "/home/travis/build/angular/angular/" or "./" path. Could this be done in one shot?
 CURRENT_SHELL_SOURCE_FILE=${BASH_SOURCE#${PROJECT_ROOT}/}

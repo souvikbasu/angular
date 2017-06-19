@@ -18,8 +18,8 @@ There are new requirements for the Tour of Heroes app:
 When you’re done, users will be able to navigate the app like this:
 
 
-<figure class='image-display'>
-  <img src='content/images/guide/toh/nav-diagram.png' alt="View navigations"></img>
+<figure>
+  <img src='generated/images/guide/toh/nav-diagram.png' alt="View navigations">
 </figure>
 
 
@@ -276,7 +276,7 @@ at the top of the `<head>` section.
 
 
 
-For more information, see the [Set the base href](guide/router#!)
+For more information, see the [Set the base href](guide/router)
 section of the [Routing and Navigation](guide/router) page.
 
 
@@ -482,7 +482,7 @@ to the array of route definitions:
 
 
 
-Read more about *redirects* in the [Redirecting routes](guide/router#!) section
+Read more about *redirects* in the [Redirecting routes](guide/router) section
 of the [Routing & Navigation](guide/router) page.
 
 
@@ -793,7 +793,7 @@ using the `Location` service you injected previously.
 
 Going back too far could take users out of the app.
 In a real app, you can prevent this issue with the <em>CanDeactivate</em> guard.
-Read more on the [CanDeactivate](api/router/index/CanDeactivate-interface) page.
+Read more on the [CanDeactivate](api/router/CanDeactivate) page.
 
 
 </div>
@@ -966,8 +966,8 @@ Add the following HTML fragment at the bottom of the template where the `<hero-d
 After clicking a hero, users should see something like this below the hero list:
 
 
-<figure class='image-display'>
-  <img src='content/images/guide/toh/mini-hero-detail.png' alt="Mini Hero Detail" height="70"></img>
+<figure>
+  <img src='generated/images/guide/toh/mini-hero-detail.png' alt="Mini Hero Detail">
 </figure>
 
 
@@ -1200,7 +1200,7 @@ These correspond to the full set of master styles that you installed earlier dur
 Here's an excerpt:
 
 
-<code-example path="toh-pt5/src/styles.css" region="toh"  title="src/styles.css (excerpt)">
+<code-example path="toh-pt5/src/styles.1.css" title="src/styles.css (excerpt)">
 
 </code-example>
 
@@ -1220,8 +1220,8 @@ Also edit <code>index.html</code> to refer to this stylesheet.
 Look at the app now. The dashboard, heroes, and navigation links are styled.
 
 
-<figure class='image-display'>
-  <img src='content/images/guide/toh/heroes-dashboard-1.png' alt="View navigations"></img>
+<figure>
+  <img src='generated/images/guide/toh/heroes-dashboard-1.png' alt="View navigations">
 </figure>
 
 
@@ -1373,5 +1373,5 @@ Your app should look like this <live-example></live-example>.
 You have much of the foundation you need to build an app.
 You're still missing a key piece: remote data access.
 
-In the next page,
+In the [next tutorial page](tutorial/toh-pt6 "Http")
 you’ll replace the mock data with data retrieved from a server using http.

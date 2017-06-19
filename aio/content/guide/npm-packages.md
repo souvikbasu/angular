@@ -1,11 +1,4 @@
-@title
-Npm Packages
-
-@intro
-Recommended npm packages, and how to specify package dependencies.
-
-@description
-
+# Npm Packages
 
 Angular applications and Angular itself depend upon features and functionality provided by a variety of third-party packages.
 These packages are maintained and installed with the Node Package Manager (<a href="https://docs.npmjs.com/">npm</a>).
@@ -104,7 +97,7 @@ the pieces that help render into the DOM.
 This package also includes the `bootstrapStatic()` method
 for bootstrapping applications for production builds that pre-compile templates offline.
 
-***@angular/platform-browser-dynamic***: Includes [Providers](api/core/index/Provider-type-alias)
+***@angular/platform-browser-dynamic***: Includes [Providers](api/core/Provider)
 and a [bootstrap](guide/ngmodule#bootstrap) method for applications that
 compile templates on the client. Don’t use offline compilation.
 Use this package for bootstrapping during development and for bootstrapping plunker samples.
@@ -194,7 +187,7 @@ with excellent support for Angular apps that use routing.
 ***[typescript](https://www.npmjs.com/package/typescript)***:
 the TypeScript language server, including the *tsc* TypeScript compiler.
 
-***@types/\****: TypeScript definition files.
+***@types/\* ***: TypeScript definition files.
 Learn more about it in the [TypeScript Configuration](guide/typescript-configuration#typings) guide.
 
 

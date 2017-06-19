@@ -14,6 +14,5 @@ export interface AotCompilerOptions {
   translations?: string;
   missingTranslation?: MissingTranslationStrategy;
   enableLegacyTemplate?: boolean;
-  /** preamble for all generated source files */
-  genFilePreamble?: string;
+  enableSummariesForJit?: boolean
 }

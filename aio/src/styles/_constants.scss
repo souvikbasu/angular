@@ -22,7 +22,7 @@ $offwhite: #FAFAFA;
 $backgroundgray: #F1F1F1;
 $lightgray: #DBDBDB;
 $mist: #ECEFF1;
-$mediumgray: #7E7E7E;
+$mediumgray: #6e6e6e;
 $darkgray: #333;
 $black: #0A1014;
 $orange: #FF9800;
@@ -34,6 +34,7 @@ $blue-400: #42A5F5;
 $blue-500: #2196F3;
 $blue-600: #1E88E5;
 $blue-800: #1565C0;
+$blue-900: #0D47A1;
 $blue-grey-50: #ECEFF1;
 $blue-grey-100: #CFD8DC;
 $blue-grey-200: #B0BEC5;
@@ -93,10 +94,22 @@ $api-symbols: (
   ),
   const: (
     content: 'K',
-    background: $purple-600
+    background: $mediumgray
+  ),
+  let: (
+    content: 'K',
+    background: $mediumgray
+  ),
+  var: (
+    content: 'K',
+    background: $mediumgray
   ),
   type-alias: (
     content: 'T',
     background: $light-green-600
+  ),
+  module: (
+    content: 'Pk',
+    background: $purple-600
   )
 );

@@ -2,11 +2,12 @@ const testPackage = require('../../helpers/test-package');
 const Dgeni = require('dgeni');
 
 describe('postProcessHtml', function() {
-  let dgeni, injector, processor;
+  let dgeni, injector, processor, createDocMessage;
 
   beforeEach(function() {
     dgeni = new Dgeni([testPackage('post-process-package', true)]);
     injector = dgeni.configureInjector();
+    createDocMessage = injector.get('createDocMessage');
     processor = injector.get('postProcessHtml');
     processor.docTypes = ['a', 'b'];
   });
@@ -58,5 +59,26 @@ describe('postProcessHtml', function() {
     ];
     processor.$process(docs);
     expect(elements).toEqual(['A1', 'B1']);
+  });
+
+  it('should report non-fatal errors', () => {
+    const log = injector.get('log');
+    const addWarning = (ast, file) => {
+      file.message('There was a problem');
+    };
+    processor.plugins = [() => addWarning];
+    processor.$process([{ docType: 'a', renderedContent: '' }]);
+    expect(log.warn).toHaveBeenCalled();
+  });
+
+  it('should throw on fatal errors', () => {
+    const log = injector.get('log');
+    const addError = (ast, file) => {
+      file.fail('There was an error');
+    };
+    const doc = { docType: 'a', renderedContent: '' };
+    processor.plugins = [() => addError];
+    expect(() => processor.$process([doc])).toThrowError(createDocMessage('There was an error', doc));
+    expect(log.error).not.toHaveBeenCalled();
   });
 });

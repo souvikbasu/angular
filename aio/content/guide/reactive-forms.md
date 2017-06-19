@@ -1,38 +1,10 @@
-@title
-Reactive Forms
-
-@intro
-Create a reactive form using FormBuilder, groups, and arrays.
-
-@description
-
+# Reactive Forms
 
 _Reactive forms_ is an Angular technique for creating forms in a _reactive_ style.
 This guide explains reactive forms as you follow the steps to build a "Hero Detail Editor" form.
 
 
 {@a toc}
-
-
-## Contents
-
-* [Introduction to reactive forms](guide/reactive-forms#intro)
-* [Setup](guide/reactive-forms#setup)
-* [Create a data model](guide/reactive-forms#data-model)
-* [Create a _reactive forms_ component](guide/reactive-forms#create-component)
-* [Create its template file](guide/reactive-forms#create-template)
-* [Import the _ReactiveFormsModule_](guide/reactive-forms#import)
-* [Display the _HeroDetailComponent_](guide/reactive-forms#update)
-* [Add a FormGroup](guide/reactive-forms#formgroup)
-* [Taking a look at the form model](guide/reactive-forms#json)
-* [Introduction to _FormBuilder_](guide/reactive-forms#formbuilder)
-* [Validators.required](guide/reactive-forms#validators)
-* [Nested FormGroups](guide/reactive-forms#grouping)
-* [Inspect _FormControl_ properties](guide/reactive-forms#properties)
-* [Set form model data using _setValue_ and _patchValue_](guide/reactive-forms#set-data)
-* [Use _FormArray_ to present an array of _FormGroups_](guide/reactive-forms#form-array)
-* [Observe control changes](guide/reactive-forms#observe-control)
-* [Save form data](guide/reactive-forms#save)
 
 Try the <live-example plnkr="final" title="Reactive Forms (final) in Plunker">Reactive Forms live-example</live-example>.
 
@@ -233,7 +205,7 @@ In real apps, most form controls have both.
 
 
 This guide touches only briefly on `Validators`. For an in-depth look at them,
-read the [Form Validation](cookbook/form-validation) cookbook.
+read the [Form Validation](guide/form-validation) guide.
 
 
 </div>
@@ -317,21 +289,21 @@ Revise the `AppComponent` template so it displays the `HeroDetailComponent`.
 ### Essential form classes
 It may be helpful to read a brief description of the core form classes.
 
-* [_AbstractControl_](api/forms/index/AbstractControl-class "API Reference: AbstractControl")
+* [_AbstractControl_](api/forms/AbstractControl "API Reference: AbstractControl")
 is the abstract base class for the three concrete form control classes:
 `FormControl`, `FormGroup`, and `FormArray`.
 It provides their common behaviors and properties, some of which are _observable_.
 
-* [_FormControl_](api/forms/index/FormControl-class "API Reference: FormControl")
+* [_FormControl_](api/forms/FormControl "API Reference: FormControl")
 tracks the value and validity status of an _individual_ form control.
 It corresponds to an HTML form control such as an input box or selector.
 
-* [_FormGroup_](api/forms/index/FormGroup-class "API Reference: FormGroup")
+* [_FormGroup_](api/forms/FormGroup "API Reference: FormGroup")
 tracks the value and validity state of a _group_ of `AbstractControl` instances.
 The group's properties include its child controls.
 The top-level form in your component is a `FormGroup`.
 
-* [_FormArray_](api/forms/index/FormArray-class "API Reference: FormArray")
+* [_FormArray_](api/forms/FormArray "API Reference: FormArray")
 tracks the value and validity state of a numerically indexed _array_ of `AbstractControl` instances.
 
 You'll learn more about these classes as you work through this guide.
@@ -352,8 +324,8 @@ Add the `bootstrap` _CSS stylesheet_ to the head of `index.html`:
 Now that everything is wired up, the browser should display something like this:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/just-formcontrol.png" width="400px" alt="Single FormControl"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/just-formcontrol.png" alt="Single FormControl">
 </figure>
 
 
@@ -456,8 +428,8 @@ The `heroForm.value` returns the _form model_.
 Piping it through the `JsonPipe` renders the model as JSON in the browser:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/json-output.png" width="400px" alt="JSON output"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/json-output.png" alt="JSON output">
 </figure>
 
 
@@ -566,8 +538,8 @@ Update the diagnostic message at the bottom of the template to display the form'
 The browser displays the following:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/validators-json-output.png" width="400px" alt="Single FormControl"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/validators-json-output.png" alt="Single FormControl">
 </figure>
 
 
@@ -582,7 +554,7 @@ Using `Validators.required` is optional for the rest of the guide.
 It remains in each of the following examples with the same configuration.
 
 For more on validating Angular forms, see the
-[Form Validation](cookbook/form-validation) guide.
+[Form Validation](guide/form-validation) guide.
 
 
 ### More FormControls
@@ -645,9 +617,9 @@ You tie these controls to the template HTML elements in the same way,
 specifiying the `FormControl` name with the `formControlName` directive.
 
 See the API reference for more information about
-[radio buttons](api/forms/index/RadioControlValueAccessor-directive "API: RadioControlValueAccessor"),
-[selects](api/forms/index/SelectControlValueAccessor-directive "API: SelectControlValueAccessor"), and
-[checkboxes](api/forms/index/CheckboxControlValueAccessor-directive "API: CheckboxControlValueAccessor").
+[radio buttons](api/forms/RadioControlValueAccessor "API: RadioControlValueAccessor"),
+[selects](api/forms/SelectControlValueAccessor "API: SelectControlValueAccessor"), and
+[checkboxes](api/forms/CheckboxControlValueAccessor "API: CheckboxControlValueAccessor").
 
 
 
@@ -695,8 +667,8 @@ After these changes, the JSON output in the browser shows the revised _form mode
 with the nested address `FormGroup`:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/address-group.png" width="400px" alt="JSON output"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/address-group.png" alt="JSON output">
 </figure>
 
 
@@ -830,12 +802,12 @@ such as one of the following:
 
 
 Learn about other `FormControl` properties in the
-[_AbstractControl_](api/forms/index/AbstractControl-class) API reference.
+[_AbstractControl_](api/forms/AbstractControl) API reference.
 
 One common reason for inspecting `FormControl` properties is to
 make sure the user entered valid values.
 Read more about validating Angular forms in the
-[Form Validation](cookbook/form-validation) guide.
+[Form Validation](guide/form-validation) guide.
 
 
 
@@ -1032,7 +1004,7 @@ You could call `reset` at the top of `ngOnChanges` like this.
 
 
 
-The `reset` method has an optional `state` value so you can reset the flags _and_ the control values at the same.
+The `reset` method has an optional `state` value so you can reset the flags _and_ the control values at the same time.
 Internally, `reset` passes the argument to `setValue`.
 A little refactoring and `ngOnChanges` becomes this:
 
@@ -1051,8 +1023,8 @@ The `HeroDetailComponent` is a nested sub-component of the `HeroListComponent` i
 Together they look a bit like this:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/hero-list.png" width="420px" alt="HeroListComponent"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/hero-list.png" alt="HeroListComponent">
 </figure>
 
 
@@ -1264,8 +1236,8 @@ Back in the browser, select the hero named "Magneta".
 "Magneta" doesn't have an address, as you can see in the diagnostic JSON at the bottom of the form.
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/addresses-array.png" width="400px" alt="JSON output of addresses array"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/addresses-array.png" alt="JSON output of addresses array">
 </figure>
 
 
@@ -1342,8 +1314,8 @@ In a real app, you'd also be able to revert unsaved changes and resume editing.
 After you implement both features in this section, the form will look like this:
 
 
-<figure class='image-display'>
-  <img src="content/images/guide/reactive-forms/save-revert-buttons.png" width="389px" alt="Form with save & revert buttons"></img>
+<figure>
+  <img src="generated/images/guide/reactive-forms/save-revert-buttons.png" alt="Form with save & revert buttons">
 </figure>
 
 

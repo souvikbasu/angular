@@ -1,12 +1,4 @@
-@title
-Browser support
-
-@intro
-Browser support and polyfills guide.
-
-@description
-
-
+# Browser support
 
 Angular supports most recent browsers. This includes the following specific versions:
 
@@ -76,7 +68,7 @@ Angular supports most recent browsers. This includes the following specific vers
     </td>
 
     <td>
-      Marshmallow (6.0)
+      Nougat (7.0)<br>Marshmallow (6.0)
     </td>
 
     <td>
@@ -335,7 +327,8 @@ Here are the features which may require additional polyfills:
   <tr style="vertical-align: top">
  
     <td>
-      <a href="./animations.html">Animations</a>
+
+      [Animations](guide/animations)
     </td>
 
     <td>
@@ -351,9 +344,10 @@ Here are the features which may require additional polyfills:
   </tr>
 
   <tr style="vertical-align: top">
- 
+
     <td>
-      <a href="../api/common/index/DatePipe-pipe.html">Date</a>      <span>,  </span>      <a href="../api/common/index/CurrencyPipe-pipe.html">currency</a>      <span>, </span>      <a href="../api/common/index/DecimalPipe-pipe.html">decimal</a>      <span> and </span>      <a href="../api/common/index/PercentPipe-pipe.html">percent</a>      <span> pipes</span>
+
+    [Date](api/common/DatePipe), [currency](api/common/CurrencyPipe), [decimal](api/common/DecimalPipe) and [percent](api/common/PercentPipe) pipes
     </td>
 
     <td>
@@ -371,7 +365,8 @@ Here are the features which may require additional polyfills:
   <tr style="vertical-align: top">
  
     <td>
-       <a href="../api/common/index/NgClass-directive.html">NgClass</a>      <span> on SVG elements</span>
+
+       [NgClass](api/common/NgClass) on SVG elements
     </td>
 
     <td>
@@ -389,7 +384,8 @@ Here are the features which may require additional polyfills:
   <tr style="vertical-align: top">
  
     <td>
-      <a href="./http.html">Http</a>      <span> when sending and receiving binary data</span>
+    
+      [Http](guide/http) when sending and receiving binary data
     </td>
 
     <td>

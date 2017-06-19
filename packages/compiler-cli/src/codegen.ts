@@ -36,19 +36,28 @@ export class CodeGenerator {
       public host: ts.CompilerHost, private compiler: compiler.AotCompiler,
       private ngCompilerHost: CompilerHost) {}
 
-  codegen(): Promise<any> {
+  codegen(): Promise<string[]> {
     return this.compiler
-        .compileAll(this.program.getSourceFiles().map(
+        .analyzeModulesAsync(this.program.getSourceFiles().map(
             sf => this.ngCompilerHost.getCanonicalFileName(sf.fileName)))
-        .then(generatedModules => {
-          generatedModules.forEach(generatedModule => {
-            const sourceFile = this.program.getSourceFile(generatedModule.srcFileUrl);
-            const emitPath = this.ngCompilerHost.calculateEmitPath(generatedModule.genFileUrl);
-            const source = GENERATED_META_FILES.test(emitPath) ? generatedModule.source :
-                                                                 generatedModule.source;
-            this.host.writeFile(emitPath, source, false, () => {}, [sourceFile]);
-          });
-        });
+        .then(analyzedModules => this.emit(analyzedModules));
+  }
+
+  codegenSync(): string[] {
+    const analyzed = this.compiler.analyzeModulesSync(this.program.getSourceFiles().map(
+        sf => this.ngCompilerHost.getCanonicalFileName(sf.fileName)));
+    return this.emit(analyzed);
+  }
+
+  private emit(analyzedModules: compiler.NgAnalyzedModules) {
+    const generatedModules = this.compiler.emitAllImpls(analyzedModules);
+    return generatedModules.map(generatedModule => {
+      const sourceFile = this.program.getSourceFile(generatedModule.srcFileUrl);
+      const emitPath = this.ngCompilerHost.calculateEmitPath(generatedModule.genFileUrl);
+      const source = generatedModule.source || compiler.toTypeScript(generatedModule, PREAMBLE);
+      this.host.writeFile(emitPath, source, false, () => {}, [sourceFile]);
+      return emitPath;
+    });
   }
 
   static create(
@@ -91,7 +100,7 @@ export class CodeGenerator {
       i18nFormat: cliOptions.i18nFormat,
       locale: cliOptions.locale, missingTranslation,
       enableLegacyTemplate: options.enableLegacyTemplate !== false,
-      genFilePreamble: PREAMBLE,
+      enableSummariesForJit: options.enableSummariesForJit !== false,
     });
     return new CodeGenerator(options, program, tsCompilerHost, aotCompiler, ngCompilerHost);
   }
